@@ -1,8 +1,11 @@
 import "dotenv/config"
 import express from "express"
 import connectOnDB from "./config/dbConnect.js"
+import router from "./routes/index.js"
 
 const app = express()
+router(app)
+
 const { PORT } = process.env
 
 async function startServer() {
