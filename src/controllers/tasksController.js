@@ -57,6 +57,20 @@ class TaskController {
       })
     }
   }
+
+  static async deleteTask(req, res){
+    try {
+      await tasks.findByIdAndDelete(req.params.id)
+      res.status(200).json({
+        message: "Task deletada com sucesso"
+      })
+    } catch (error){
+      res.status(500).json({
+        message: "Falha ao deletar a Task",
+        error: error.message,
+      })
+    }
+  }
 }
 
 export default TaskController
