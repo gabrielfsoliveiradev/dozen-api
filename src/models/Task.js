@@ -9,4 +9,6 @@ const taskSchema = new Schema({
   updated_at: { type: Date }
 }, {versionKey: false})
 
-export default model("tasks", taskSchema)
+const tasks = model("tasks", taskSchema)
+
+export default tasks
