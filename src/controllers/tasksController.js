@@ -41,6 +41,24 @@ class TaskController {
       })
     }
   }
+
+  static async createTask(req, res){
+    try {
+      const task = req.body
+      task.created_at = new Date()
+      const taskCrated = await tasks.create(task)
+    
+      res.status(201).json({
+        message: "Task criada com sucesso",
+        task: taskCrated
+      })
+    } catch (error){
+      res.status(500).json({
+        message: "Falha ao criar a Task",
+        error: error.message,
+      })
+    }
+  }
 }
 
 export default TaskController

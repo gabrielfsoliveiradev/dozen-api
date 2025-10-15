@@ -5,5 +5,6 @@ const route = Router()
 
 route.get("/tasks", TaskController.getAllTasks)
 route.get("/tasks/:id", TaskController.getTaskByID)
+route.post("/tasks", TaskController.createTask)
 
 export default route
