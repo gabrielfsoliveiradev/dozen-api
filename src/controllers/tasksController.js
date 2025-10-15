@@ -44,13 +44,11 @@ class TaskController {
 
   static async createTask(req, res){
     try {
-      const task = req.body
-      task.created_at = new Date()
-      const taskCrated = await tasks.create(task)
+      const task = await tasks.create(req.body)
     
       res.status(201).json({
         message: "Task criada com sucesso",
-        task: taskCrated
+        task
       })
     } catch (error){
       res.status(500).json({
