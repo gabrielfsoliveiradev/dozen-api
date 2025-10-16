@@ -22,12 +22,9 @@ class TaskController {
       const task = await tasks.findById(req.params.id)
 
       if (!task) {
-        return res
-          .status(404)
-          .json({
-            message: `Não foi encontrado nenhuma task com o id: ${req.params.id}`,
-          })
-        
+        return res.status(404).json({
+          message: `Não foi encontrado nenhuma task com o id: ${req.params.id}`,
+        })
       }
 
       res.status(200).json({
@@ -42,15 +39,15 @@ class TaskController {
     }
   }
 
-  static async createTask(req, res){
+  static async createTask(req, res) {
     try {
       const task = await tasks.create(req.body)
-    
+
       res.status(201).json({
         message: "Task criada com sucesso",
-        task
+        task,
       })
-    } catch (error){
+    } catch (error) {
       res.status(500).json({
         message: "Falha ao criar a Task",
         error: error.message,
@@ -58,13 +55,13 @@ class TaskController {
     }
   }
 
-  static async deleteTask(req, res){
+  static async deleteTask(req, res) {
     try {
       await tasks.findByIdAndDelete(req.params.id)
       res.status(200).json({
-        message: "Task deletada com sucesso"
+        message: "Task deletada com sucesso",
       })
-    } catch (error){
+    } catch (error) {
       res.status(500).json({
         message: "Falha ao deletar a Task",
         error: error.message,
@@ -72,16 +69,25 @@ class TaskController {
     }
   }
 
-  static async updateTask(req, res){
+  static async updateTask(req, res) {
     try {
-      await tasks.findByIdAndUpdate(req.params.id, req.body)
-      const taskUpdated = await tasks.findById(req.params.id)
+      const taskUpdated = await tasks.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      )
+
+      if (!taskUpdated) {
+        return res.status(404).json({
+          message: "Task não encontrada",
+        })
+      }
 
       res.status(200).json({
         message: "Task Atualizada com sucesso",
-        task: taskUpdated
+        task: taskUpdated,
       })
-    } catch (error){
+    } catch (error) {
       res.status(500).json({
         message: "Falha ao atualizar a Task",
         error: error.message,
