@@ -71,6 +71,23 @@ class TaskController {
       })
     }
   }
+
+  static async updateTask(req, res){
+    try {
+      await tasks.findByIdAndUpdate(req.params.id, req.body)
+      const taskUpdated = await tasks.findById(req.params.id)
+
+      res.status(200).json({
+        message: "Task Atualizada com sucesso",
+        task: taskUpdated
+      })
+    } catch (error){
+      res.status(500).json({
+        message: "Falha ao atualizar a Task",
+        error: error.message,
+      })
+    }
+  }
 }
 
 export default TaskController
